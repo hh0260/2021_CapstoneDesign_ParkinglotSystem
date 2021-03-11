@@ -54,3 +54,6 @@ get_line.py에서 생성된 좌표와 미리학습된 모델을 활용하여 해
 
 ### stream.py
 실시간 처리된 영상을 다시 웹스트리밍합니다.
+
+## 테스트영상 다운로드
+https://drive.google.com/file/d/18kJNkTtR4ZJDcZvqszIgex-rzL48oF8y/view?usp=sharing
