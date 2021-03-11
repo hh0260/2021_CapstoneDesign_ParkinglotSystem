@@ -26,6 +26,10 @@ Parking space tracking system with Deep Learning
 
 ## 프로그램 구성 요소
 
+### CNN.py
+train_data 폴더 내의 이미지셋을 이용하여 CNN 이미지 분류 모델을 학습시키고 해당 모델을 저장합니다.
+
+
 ### get_line.py
 
 실시간 주차영상을 받아와서 주차선을 설정합니다.
