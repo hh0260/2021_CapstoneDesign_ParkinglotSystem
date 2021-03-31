@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="kr">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>주차장</title>
+    <title id="name">{{name}}</title>
 </head>
 <body>
+    <p id="count">{{text}}<p/>
 <div class="container">
+    <h3 class="mt-5">Live Streaming</h3>
     <img src="{{ url_for('video_feed') }}" width="100%">
 </div>
 </body>
