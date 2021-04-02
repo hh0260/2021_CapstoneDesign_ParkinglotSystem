@@ -41,7 +41,7 @@ class Output:
             if ret == False:
                 break
             frame = cv2.resize(frame, (width, height))
-            if count == 5:
+            if count == 3:
                 count = 0
                 cut = np.copy(frame)
         

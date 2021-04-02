@@ -13,7 +13,6 @@ import tensorflow as tf
 import numpy as np
 
 
-
 class Stream:
        
     app = Flask(__name__)
@@ -54,7 +53,7 @@ class Stream:
             if not success:
                 break
             frame = cv2.resize(frame, (width, height))
-            if count == 10:
+            if count == 3:
                 cut = np.copy(frame)
             
                 i=0
@@ -78,7 +77,7 @@ class Stream:
         
         
             with lock:
-                if count == 10:
+                if count == 3:
                     result_text = str(freespot_num)  + "/"+ str(total_num)
                     count = 0
                     freespot_num = 0
