@@ -1,5 +1,5 @@
 import cv2
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtWidgets
 import Inputnum_ui
 
 
@@ -42,11 +42,14 @@ class Get_line(object):
                         count = -1
                         break
                     elif Inputnum_ui.space_num.isdigit():   # 숫자 입력한 경우  
+                        if int(Inputnum_ui.space_num) < 1 or int(Inputnum_ui.space_num) > 20:
+                            QtWidgets.QMessageBox.information(Dialog, "Input Warning", "Please enter only numbers in the range 1 to 20.")
+                            continue
                         print(Inputnum_ui.space_num)
                         num_input = True  
                         break
                     else:  #다른 문자 입력한 경우
-                        QtWidgets.QMessageBox.information(Dialog, "Input Warning", "Please enter only numbers.")
+                        QtWidgets.QMessageBox.information(Dialog, "Input Warning", "Please enter only numbers in the range 1 to 20.")
                         continue
 
             count += 1   
@@ -105,21 +108,21 @@ class Get_line(object):
                     y0, y1, y2, y3 = y1, y2, y3, y0
                     
                 space_num = int(Inputnum_ui.space_num)
-                gap_x01 = (int)((x1-x0)/(space_num))
-                gap_y01 = (int)((y1-y0)/(space_num))
-                gap_x32 = (int)((x2-x3)/(space_num))
-                gap_y32 = (int)((y2-y3)/(space_num))
+                gap_x01 = (x1-x0)/(space_num)
+                gap_y01 = (y1-y0)/(space_num)
+                gap_x32 = (x2-x3)/(space_num)
+                gap_y32 = (y2-y3)/(space_num)
         
                 i=0
                 for i in range(space_num):  #각 사각형 별 좌표 구하기
                     #점0
-                    point_list.append((x0 + i*gap_x01, y0 + i*gap_y01))
+                    point_list.append((int(x0 + i*gap_x01), int(y0 + i*gap_y01)))
                     #점1
-                    point_list.append((x0 + (i+1)*gap_x01, y0 + (i+1)*gap_y01))
+                    point_list.append((int(x0 + (i+1)*gap_x01), int(y0 + (i+1)*gap_y01)))
                     #점2
-                    point_list.append((x3 + (i+1)*gap_x32, y3 + (i+1)*gap_y32))
+                    point_list.append((int(x3 + (i+1)*gap_x32), int(y3 + (i+1)*gap_y32)))
                     #점3
-                    point_list.append((x3 + i*gap_x32, y3 + i*gap_y32))
+                    point_list.append((int(x3 + i*gap_x32), int(y3 + i*gap_y32)))
                     
                 #사각형 그리기
                 i=0

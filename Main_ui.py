@@ -6,7 +6,6 @@
 #
 # WARNING! All changes made in this file will be lost!
 import sys
-import cv2
 from PyQt5 import QtCore, QtWidgets
 from Drawline_ui import Ui_Drawline
 

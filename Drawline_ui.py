@@ -7,9 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 import cv2
-import threading
 from PyQt5 import QtCore, QtWidgets
-from Inputnum_ui import Ui_Inputnum
 from get_line import Get_line
 
 
