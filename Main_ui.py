@@ -8,6 +8,8 @@
 import sys
 from PyQt5 import QtCore, QtWidgets
 from Drawline_ui import Ui_Drawline
+from output import Output
+from stream import Stream
 
 videosource = "./video.h264"
 #videosource = "http://keycalendar.iptime.org:8091/?action=stream"
@@ -39,6 +41,11 @@ class Ui_MainWindow(object):
         self.pushButton_3 = QtWidgets.QPushButton(self.layoutWidget)
         self.pushButton_3.setObjectName("pushButton_3")
         self.verticalLayout.addWidget(self.pushButton_3)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(100, 260, 271, 31))
+        self.label.setText("")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")        
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -48,6 +55,8 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.pushButton.clicked.connect(self.setline_clicked)
+        self.pushButton_2.clicked.connect(self.checkoutput_clicked)
+        self.pushButton_3.clicked.connect(self.stream_clicked)
 
     def setline_clicked(self):
         self.Dialog = QtWidgets.QDialog()
@@ -56,8 +65,42 @@ class Ui_MainWindow(object):
         self.Dialog.show()
         MainWindow.hide()
         self.Dialog.exec_()
-        print("선 입력 완료")
         MainWindow.show()
+        
+    def checkoutput_clicked(self):
+        self.button_set(False)
+        error_code = Output.checkfile()
+        if  error_code == 0:   #학습모델
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no trained model file.") 
+            self.button_set(True) 
+            return
+        elif error_code == 1:   #좌표파일없음
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")               
+            self.button_set(True) 
+            return
+        Output.show_video(videosource)
+        self.button_set(True) 
+        
+    def stream_clicked(self):        
+        self.button_set(False)
+        error_code = Output.checkfile()
+        if  error_code == 0:   #학습모델
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no trained model file.") 
+            self.button_set(True) 
+            return
+        elif error_code == 1:   #좌표파일없음
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")               
+            self.button_set(True) 
+            return
+        MainWindow.hide()
+        Stream.stream_video(videosource)
+        self.button_set(True)
+        MainWindow.show()
+        
+    def button_set(self, flag):
+        self.pushButton.setEnabled(flag)
+        self.pushButton_2.setEnabled(flag)
+        self.pushButton_3.setEnabled(flag)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

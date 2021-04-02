@@ -7,7 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 
 import cv2
+import os
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QDesktopWidget
 from get_line import Get_line
 
 
@@ -15,7 +17,6 @@ class Ui_Drawline(object):
     
     def __init__(self, videosource):
         self.videosource = videosource
-        self.cap = cv2.VideoCapture(videosource)
         super().__init__()
     
     def setup(self, Dialog):
@@ -47,10 +48,12 @@ class Ui_Drawline(object):
 
     def capture_clicked(self):
         self.button_set(False)
-        Get_line.capture(self.cap)
+        Get_line.capture(self.videosource)
         self.button_set(True)       
 
-    def addlines_clicked(self):        
+    def addlines_clicked(self):  
+        if not os.path.isfile('./cap.jpg'):
+            return
         image = cv2.imread("./cap.jpg", cv2.IMREAD_COLOR);        
         self.button_set(False)        
         Get_line.addlines(image)        

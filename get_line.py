@@ -2,15 +2,7 @@ import cv2
 from PyQt5 import QtWidgets
 import Inputnum_ui
 
-
-count = 0
-num_input = False
-x0 = y0 = x1 = y1 = -1
-x2 = y2 = x3 = y3 = -1
-image_list = []
-point_list = []
-
-class Get_line(object):
+class Get_line:
     
     # Mouse Callback함수 : 파라미터는 고정됨.
     def Mouse_Click(event, x, y, flags, param):
@@ -64,6 +56,7 @@ class Get_line(object):
         
         image_list = []  #이미지 스택
         space_num_list = []
+        point_list = []
         
         draw_image = image.copy()
         image_list.append(draw_image.copy()) #원본 저장
@@ -71,8 +64,6 @@ class Get_line(object):
         
         cv2.namedWindow('image')
         cv2.setMouseCallback('image',Get_line.Mouse_Click)  # 마우스 이벤트 후 callback 수행하는 함수 지정
-
-        point_list = []
 
         while True:
             cv2.imshow("image", draw_image)    # 화면을 보여준다.
@@ -144,7 +135,8 @@ class Get_line(object):
 
         cv2.destroyAllWindows()
     
-    def capture(cap):
+    def capture(videosource):
+        cap = cv2.VideoCapture(videosource)
         iscapture = False
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
@@ -164,6 +156,8 @@ class Get_line(object):
                 cv2.imwrite("./cap.jpg", frame)   
                 img = cv2.imread("./cap.jpg"); #이미지 불러오기
                 cv2.imshow("Video",img);
+                
+        cap.release()
         cv2.destroyWindow("Video")
 
 #개선사항0. 원근감 반영하기
