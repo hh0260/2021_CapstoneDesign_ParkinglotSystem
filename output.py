@@ -9,8 +9,8 @@ import os
 import sys
 import numpy as np
 import tensorflow as tf
-import makevideo
-import get_line
+import Makevideo
+import Get_line
 
 cap = cv2.VideoCapture("./video.h264")
 #cap = cv2.VideoCapture("http://keycalendar.iptime.org:8091/?action=stream")
@@ -22,10 +22,10 @@ height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
 #if not os.path.isfile('points.txt'):
 if not os.path.isfile('cap.jpg'):
     print("학습모델 파일이 없습니다.")
-    get_line.MakeLine.capture(cap)
+    Get_line.MakeLine.capture(cap)
     
 point_list = []
-point_list = makevideo.MakeVideo.list_point()     
+point_list = Makevideo.MakeVideo.list_point()     
 
 #저장된 모델 불러오기
 if not os.path.isfile('parking_model.h5'):
@@ -52,12 +52,12 @@ while (cap.isOpened):
         
         i=0
         while i < len(point_list)-3:   #모든 영역 빨간색
-            frame = makevideo.MakeVideo.draw_poly(frame, point_list, i, [0, 0, 255])
+            frame = Makevideo.MakeVideo.draw_poly(frame, point_list, i, [0, 0, 255])
             i += 4      
         
         i=0
         while i < len(point_list)-3:
-            img = makevideo.MakeVideo.warp_image(cut, point_list[i], point_list[i+1], 
+            img = Makevideo.MakeVideo.warp_image(cut, point_list[i], point_list[i+1], 
                               point_list[i+2], point_list[i+3])
             
             img = tf.expand_dims(img, 0)
@@ -67,7 +67,7 @@ while (cap.isOpened):
             print(str(total_num)+": "+class_names[np.argmax(score)]+", "+str(100 * np.max(score)))
             total_num += 1
             if np.argmax(score):
-                frame = makevideo.MakeVideo.draw_poly(frame, point_list, i, [0, 255, 0])
+                frame = Makevideo.MakeVideo.draw_poly(frame, point_list, i, [0, 255, 0])
                 
             i += 4
         

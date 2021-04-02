@@ -20,8 +20,8 @@ outputFrame = None
 lock = threading.Lock()
 
 
-#camera = cv2.VideoCapture("http://keycalendar.iptime.org:8091/?action=stream")
-camera = cv2.VideoCapture("./video.h264")
+camera = cv2.VideoCapture("http://keycalendar.iptime.org:8091/?action=stream")
+#camera = cv2.VideoCapture("./video.h264")
 
 width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
 height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
@@ -84,7 +84,7 @@ def detect_motion():
                 count = 0
                 freespot_num = 0
                 total_num = 0 
-                cv2.putText(frame, result_text, (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (255, 100, 185), 6, cv2.LINE_AA)
+                cv2.putText(frame, result_text, (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 255, 255), 6, cv2.LINE_AA)
                 outputFrame = np.copy(frame)
             
 def gen_frames():
