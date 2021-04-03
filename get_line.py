@@ -35,12 +35,12 @@ class Get_line:
                         break
                     elif Inputnum_ui.space_num.isdigit():   # 숫자 입력한 경우  
                         if int(Inputnum_ui.space_num) < 1 or int(Inputnum_ui.space_num) > 20:
-                            QtWidgets.QMessageBox.information(Dialog, "Input Warning", "Please enter only numbers in the range 1 to 20.")
+                            QtWidgets.QMessageBox.warning(Dialog, "Input Warning", "Please enter only numbers in the range 1 to 20.")
                             continue
                         num_input = True  
                         break
                     else:  #다른 문자 입력한 경우
-                        QtWidgets.QMessageBox.information(Dialog, "Input Warning", "Please enter only numbers in the range 1 to 20.")
+                        QtWidgets.QMessageBox.warning(Dialog, "Input Warning", "Please enter only numbers in the range 1 to 20.")
                         continue
 
             count += 1   
@@ -164,10 +164,4 @@ class Get_line:
                 
         cap.release()
         cv2.destroyWindow("Video")
-
-#개선사항0. 원근감 반영하기
-#개선사항1. 2칸 입력시 가로세로 조건
-#개선사항2. 사각형 그리는 순서 고지
-#개선사항3. 기능들 표시
-
 
