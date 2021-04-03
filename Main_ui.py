@@ -13,6 +13,7 @@ from output import Output
 
 videosource = "./video.h264"
 #videosource = "http://keycalendar.iptime.org:8091/?action=stream"
+#videosource = "http://wrong.address"
 
 class Ui_MainWindow(object):    
  
@@ -61,42 +62,50 @@ class Ui_MainWindow(object):
     def setline_clicked(self):
         self.Dialog = QtWidgets.QDialog()
         self.ui = Ui_Drawline(videosource)
-        self.ui.setup(self.Dialog)
+        self.ui.setupUi(self.Dialog)
         self.Dialog.show()
         MainWindow.hide()
         self.Dialog.exec_()
         MainWindow.show()
         
     def checkoutput_clicked(self):
+        import cv2
+        
         self.button_set(False)
         error_code = Output.checkfile()
-        if  error_code == 0:   #학습모델
+        cap = cv2.VideoCapture(videosource)
+        if not cap.isOpened():   #url주소
+            QtWidgets.QMessageBox.warning(MainWindow, "Load failed", "Failed to load video(Invalid url address)") 
+        elif  error_code == 0:   #학습모델
             QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no trained model file.") 
-            self.button_set(True) 
-            return
         elif error_code == 1:   #좌표파일없음
-            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")               
-            self.button_set(True) 
-            return
-        Output.show_video(videosource)
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")    
+        else:
+            Output.show_video(cap)
+        cap.release()
         self.button_set(True) 
         
     def stream_clicked(self):   
-        from stream import Stream
+        import cv2
+        from stream import Stream      
+        
         self.button_set(False)
         error_code = Output.checkfile()
-        if  error_code == 0:   #학습모델
+        cap = cv2.VideoCapture(videosource)
+        if not cap.isOpened():   #url주소
+            QtWidgets.QMessageBox.warning(MainWindow, "Load failed", "Failed to load video(Invalid url address)") 
+        elif  error_code == 0:   #학습모델
             QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no trained model file.") 
-            self.button_set(True) 
-            return
         elif error_code == 1:   #좌표파일없음
-            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")               
-            self.button_set(True) 
-            return
-        MainWindow.hide()
-        Stream.stream_video(videosource)
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")    
+        else:
+            MainWindow.hide()
+            Stream.init_stream(cap)
+            MainWindow.show()
+            
+        cap.release()
         self.button_set(True)
-        MainWindow.show()
+        
         
     def button_set(self, flag):
         self.pushButton.setEnabled(flag)

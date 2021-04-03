@@ -9,7 +9,6 @@
 import cv2
 import os
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QDesktopWidget
 from get_line import Get_line
 
 
@@ -19,37 +18,43 @@ class Ui_Drawline(object):
         self.videosource = videosource
         super().__init__()
     
-    def setup(self, Dialog):
-        Dialog.setObjectName("Draw line")
-        Dialog.resize(413, 293)
-        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
+    def setupUi(self, Dialog):
+        self.Dialog = Dialog
+        self.Dialog.setObjectName("Draw line")
+        self.Dialog.resize(413, 293)
+        self.buttonBox = QtWidgets.QDialogButtonBox(self.Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(30, 240, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
-        self.pushButton = QtWidgets.QPushButton(Dialog)
+        self.pushButton = QtWidgets.QPushButton(self.Dialog)
         self.pushButton.setGeometry(QtCore.QRect(130, 80, 141, 41))
         self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(Dialog)
+        self.pushButton_2 = QtWidgets.QPushButton(self.Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(130, 150, 141, 41))
         self.pushButton_2.setObjectName("pushButton_2")
-        self.buttonBox_2 = QtWidgets.QDialogButtonBox(Dialog)
+        self.buttonBox_2 = QtWidgets.QDialogButtonBox(self.Dialog)
         self.buttonBox_2.setGeometry(QtCore.QRect(310, 10, 81, 32))
         self.buttonBox_2.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox_2.setStandardButtons(QtWidgets.QDialogButtonBox.Help)
         self.buttonBox_2.setObjectName("buttonBox_2")
 
-        self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi()
+        self.buttonBox.accepted.connect(self.Dialog.accept)
+        QtCore.QMetaObject.connectSlotsByName(self.Dialog)
         
         self.pushButton.clicked.connect(self.capture_clicked)
         self.pushButton_2.clicked.connect(self.addlines_clicked)
 
-    def capture_clicked(self):
+    def capture_clicked(self):     
         self.button_set(False)
-        Get_line.capture(self.videosource)
-        self.button_set(True)       
+        cap = cv2.VideoCapture(self.videosource)
+        if not cap.isOpened():   #url주소
+            QtWidgets.QMessageBox.warning(self.Dialog, "Load failed", "Failed to load video(Invalid url address)") 
+        else:
+            Get_line.capture(self.videosource)
+        cap.release()
+        self.button_set(True) 
 
     def addlines_clicked(self):  
         if not os.path.isfile('./cap.jpg'):
@@ -64,9 +69,9 @@ class Ui_Drawline(object):
         self.pushButton_2.setEnabled(flag)
         self.buttonBox.setEnabled((flag))
         
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Draw line"))
+        self.Dialog.setWindowTitle(_translate("Dialog", "Draw line"))
         self.pushButton.setText(_translate("Dialog", "Capture"))
         self.pushButton_2.setText(_translate("Dialog", "Add lines"))
 

@@ -19,12 +19,9 @@ class Output:
         if not os.path.isfile('points.txt'):
             return 1 
     
-    def show_video(videosource):
-        cap = cv2.VideoCapture(videosource)
+    def show_video(cap):
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
-        
-
         
         point_list = []   
         point_list = MakeVideo.list_point()    #좌표 불러오기        

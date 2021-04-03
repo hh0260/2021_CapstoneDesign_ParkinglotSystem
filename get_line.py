@@ -37,7 +37,6 @@ class Get_line:
                         if int(Inputnum_ui.space_num) < 1 or int(Inputnum_ui.space_num) > 20:
                             QtWidgets.QMessageBox.information(Dialog, "Input Warning", "Please enter only numbers in the range 1 to 20.")
                             continue
-                        print(Inputnum_ui.space_num)
                         num_input = True  
                         break
                     else:  #다른 문자 입력한 경우
@@ -127,9 +126,6 @@ class Get_line:
                     
                 image_list.append(draw_image.copy())
                 space_num_list.append(space_num)
-                print(len(image_list))
-                print(len(space_num_list))
-                print(space_num_list)
                 num_input = False
                 count = 0
 

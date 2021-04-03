@@ -17,10 +17,10 @@ class Stream:
        
     app = Flask(__name__)
     
-    def stream_video(videosource):   #init
+    def init_stream(cap):   #init
         global name, model, point_list, camera, outputFrame, lock, count, total_num, freespot_num, result_text
 
-        camera = cv2.VideoCapture(videosource)    
+        camera = cap  
         outputFrame = None    
         lock = threading.Lock()
 
@@ -41,10 +41,10 @@ class Stream:
         Stream.app.run(host = '0.0.0.0', threaded=True)
         camera.release()
         cv2.destroyAllWindows()
-
-
+        
+        
     def detect_motion():
-        global name, model, point_list, camera, outputFrame, lock, count, total_num, freespot_num, result_text
+        global model, point_list, camera, outputFrame, lock, count, total_num, freespot_num, result_text
         
         width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
         height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
