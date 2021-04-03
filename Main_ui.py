@@ -55,9 +55,15 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.buttonBox.clicked.connect(self.help_clicked)
         self.pushButton.clicked.connect(self.setline_clicked)
         self.pushButton_2.clicked.connect(self.checkoutput_clicked)
         self.pushButton_3.clicked.connect(self.stream_clicked)
+
+    def help_clicked(self):
+        QtWidgets.QMessageBox.information(MainWindow, "help", "Set line:주차장의 주차선 그리기\n"
+                                                              "\nCheck output:그려논 주차선 확인\n"
+                                                              "\nStream:주차장 스트리밍")
 
     def setline_clicked(self):
         self.Dialog = QtWidgets.QDialog()

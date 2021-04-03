@@ -42,9 +42,16 @@ class Ui_Drawline(object):
         self.retranslateUi()
         self.buttonBox.accepted.connect(self.Dialog.accept)
         QtCore.QMetaObject.connectSlotsByName(self.Dialog)
-        
+
+        self.buttonBox_2.clicked.connect(self.help_clicked)
         self.pushButton.clicked.connect(self.capture_clicked)
         self.pushButton_2.clicked.connect(self.addlines_clicked)
+
+    def help_clicked(self):
+        QtWidgets.QMessageBox.information(self.Dialog, "help", "Capture: 주차장 선그리기를 위한 이미지 추출\n"
+                                                               "\tCtal+z: 캡쳐\n\tEsc: 종료\n"
+                                                               "\nAdd lines: 주차장 선그리기\n"
+                                                               "\n마우스 좌클릭: 주차선 그리기\n\tS: 저장\n\tCtal+z: 되돌리기\n\tEsc: 종료")
 
     def capture_clicked(self):     
         self.button_set(False)
@@ -52,7 +59,7 @@ class Ui_Drawline(object):
         if not cap.isOpened():   #url주소
             QtWidgets.QMessageBox.warning(self.Dialog, "Load failed", "Failed to load video(Invalid url address)") 
         else:
-            Get_line.capture(self.videosource)
+            Get_line.capture(cap)
         cap.release()
         self.button_set(True) 
 

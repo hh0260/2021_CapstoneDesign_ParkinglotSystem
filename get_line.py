@@ -134,8 +134,7 @@ class Get_line:
 
         cv2.destroyAllWindows()
     
-    def capture(videosource):
-        cap = cv2.VideoCapture(videosource)
+    def capture(cap):
         iscapture = False
         closecount = 0
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
