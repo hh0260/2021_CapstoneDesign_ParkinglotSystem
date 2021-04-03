@@ -131,13 +131,17 @@ class Get_line:
                 print(len(space_num_list))
                 print(space_num_list)
                 num_input = False
-                count = 0               
+                count = 0
+
+            if cv2.getWindowProperty('image', 0) < 0:
+                break
 
         cv2.destroyAllWindows()
     
     def capture(videosource):
         cap = cv2.VideoCapture(videosource)
         iscapture = False
+        closecount = 0
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
         while (cap.isOpened):            
@@ -148,7 +152,10 @@ class Get_line:
         
             key = cv2.waitKey(33)  # 1) & 0xFF
             if not iscapture:
+                if closecount > 0 and cv2.getWindowProperty('Video', 0) < 0: #동영상 닫기
+                    break
                 cv2.imshow("Video", frame)
+                closecount += 1
             if key == 27:  # esc 종료
                 break
             elif key == 26:  # ctrl + z
@@ -156,6 +163,9 @@ class Get_line:
                 cv2.imwrite("./cap.jpg", frame)   
                 img = cv2.imread("./cap.jpg"); #이미지 불러오기
                 cv2.imshow("Video",img);
+            if cv2.getWindowProperty('Video', 0) < 0:   #캡쳐 이후 닫기
+                break
+
                 
         cap.release()
         cv2.destroyWindow("Video")

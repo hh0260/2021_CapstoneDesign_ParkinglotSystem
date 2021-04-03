@@ -31,6 +31,7 @@ class Output:
         model = tf.keras.models.load_model('parking_model.h5') #학습모델 불러오기
        
         #class_names = ['car','empty']
+        closecount = 0
         count = 0     
         #total_num = 0 
 
@@ -38,6 +39,7 @@ class Output:
     
             ret, frame = cap.read()
             count += 1
+            closecount += 1
             if ret == False:
                 break
             frame = cv2.resize(frame, (width, height))
@@ -66,24 +68,14 @@ class Output:
                     i += 4        
                 #total_num = 0   
                 cv2.imshow("Video", frame)
-        
+
         
             key = cv2.waitKey(33)  # 1) & 0xFF
 
             if key == 27:  # esc 종료
                 break
+            if closecount > 2 and cv2.getWindowProperty('Video', 0) < 0:
+                break
 
         cap.release()
         cv2.destroyAllWindows()
- 
-
-
-    
-
-    
-
-
-
-
-
-
