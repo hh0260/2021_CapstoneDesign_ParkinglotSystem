@@ -39,6 +39,8 @@ class Stream:
         t.daemon = True
         t.start()
         Stream.app.run(host = '0.0.0.0', threaded=True)
+        camera.release()
+        cv2.destroyAllWindows()
 
 
     def detect_motion():

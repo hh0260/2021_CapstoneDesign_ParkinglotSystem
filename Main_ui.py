@@ -9,7 +9,7 @@ import sys
 from PyQt5 import QtCore, QtWidgets
 from Drawline_ui import Ui_Drawline
 from output import Output
-from stream import Stream
+
 
 videosource = "./video.h264"
 #videosource = "http://keycalendar.iptime.org:8091/?action=stream"
@@ -81,7 +81,8 @@ class Ui_MainWindow(object):
         Output.show_video(videosource)
         self.button_set(True) 
         
-    def stream_clicked(self):        
+    def stream_clicked(self):   
+        from stream import Stream
         self.button_set(False)
         error_code = Output.checkfile()
         if  error_code == 0:   #학습모델
