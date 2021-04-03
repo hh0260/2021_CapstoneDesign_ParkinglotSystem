@@ -61,7 +61,7 @@ class Ui_MainWindow(object):
         self.pushButton_3.clicked.connect(self.stream_clicked)
 
     def help_clicked(self):
-        QtWidgets.QMessageBox.information(MainWindow, "help", "Set line - 주차선 그리기 설정\n"
+        QtWidgets.QMessageBox.about(MainWindow, "help", "Set line - 주차선 그리기 설정\n"
                                                               "\nCheck output - 출력 영상 확인\n"
                                                               "\nStream - 스트리밍 시작")
 

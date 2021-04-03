@@ -48,7 +48,7 @@ class Ui_Drawline(object):
         self.pushButton_2.clicked.connect(self.addlines_clicked)
 
     def help_clicked(self):
-        QtWidgets.QMessageBox.information(self.Dialog, "help", "Capture - 주차선 그리기 전 이미지 추출\n"
+        QtWidgets.QMessageBox.about(self.Dialog, "help", "Capture - 주차선 그리기 전 이미지 추출\n"
                                                                "\tCtrl+z: 캡처\n\tEsc: 종료\n"
                                                                "\nAdd lines - 주차선 그리기\n"
                                                                "\t마우스 좌클릭: 주차선 그리기\n\tS: 저장\n\tCtrl+z: 되돌리기\n\tEsc: 종료")
