@@ -65,6 +65,7 @@ class Ui_Drawline(object):
 
     def addlines_clicked(self):  
         if not os.path.isfile('./cap.jpg'):
+            QtWidgets.QMessageBox.warning(self.Dialog, "No Capture file", "Please proceed with the capture first.") 
             return
         image = cv2.imread("./cap.jpg", cv2.IMREAD_COLOR);        
         self.button_set(False)        

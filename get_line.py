@@ -5,9 +5,10 @@ import Inputnum_ui
 class Get_line:
     
     # Mouse Callback함수 : 파라미터는 고정됨.
-    def Mouse_Click(event, x, y, flags, param):
+    def Mouse_Click(event, x, y, flags, param):        
+        
         global count, num_input, x0, y0, x1, y1, x2, y2, x3, y3, draw_image, image_list, point_list
-    
+        
         if event == cv2.EVENT_LBUTTONDOWN:                      # 마우스를 클릭s
             if count == 0:
                 x0, y0 = x, y
