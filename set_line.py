@@ -103,13 +103,13 @@ class Set_line:
                 cv2.waitKey(500)   #0.5초 뒤 종료
                 break    
             
-            if k == 26 and len(space_num_list) > 0:  # ctrl + z : 한 단계 되돌리기
+            if k == 26:  # ctrl + z : 한 단계 되돌리기
                 if count > 1: #그리는 도중일때
                     count = 0
-                    continue
-                del(point_list[-4*(space_num_list.pop()):])
-                cv2.imshow('Set line', frame)
-                count = 0
+                    continue                
+                if len(space_num_list) > 0:
+                    del(point_list[-4*(space_num_list.pop()):])
+                    count = 0
                 
         
             if num_inputflag == True:    #숫자 입력하고 그리기
