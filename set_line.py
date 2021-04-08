@@ -22,7 +22,7 @@ class Set_line:
             elif count == 3:      
                 x3, y3 = x, y
                 count += 1                   
-                frame = Set_line.draw_temp(frame, count, x0, y0, x1, y1, x2, y2, x3, y3)           
+                frame = Set_line.draw_temp(frame, count,(x0, y0),(x1, y1),(x2, y2),(x3, y3))           
                 cv2.imshow('Set line', frame)
                 
                 while True:
@@ -91,7 +91,7 @@ class Set_line:
             frame = cv2.resize(frame, (width, height))
             
             frame = Set_line.draw_list(frame, point_list)       #사각형 그리기   
-            frame = Set_line.draw_temp(frame, count, x0, y0, x1, y1, x2, y2, x3, y3)
+            frame = Set_line.draw_temp(frame, count,(x0, y0),(x1, y1),(x2, y2),(x3, y3)) 
             cv2.imshow('Set line', frame)
             
             k = cv2.waitKey(33) & 0xFF   # 키보드 입력값을 받고     
@@ -165,15 +165,15 @@ class Set_line:
         
         return frame
     
-    def draw_temp(frame, count, x0, y0, x1, y1, x2, y2, x3, y3):        
+    def draw_temp(frame, count, pt1, pt2, pt3, pt4):        
 
         if count > 1:            
-            cv2.line(frame,(x0,y0),(x1, y1),(255,0,0),2)            
+            cv2.line(frame, pt1, pt2, (255,0,0), 2)            
         if count > 2:            
-            cv2.line(frame,(x1,y1),(x2, y2),(255,0,0),2)            
+            cv2.line(frame, pt2, pt3, (255,0,0), 2)            
         if count > 3:      
-            cv2.line(frame,(x2,y2),(x3, y3),(255,0,0),2)            
-            cv2.line(frame,(x0,y0),(x3, y3),(255,0,0),2) 
+            cv2.line(frame, pt3, pt4, (255,0,0), 2)            
+            cv2.line(frame, pt1, pt4, (255,0,0), 2) 
         
         return frame
 
