@@ -35,7 +35,7 @@ public class SelectPark extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void click_newActivity(View view) {
+    public void click_parkinglot(View view) {
         Intent intent=new Intent(this, VideoShow.class);
         startActivity(intent);
     }
