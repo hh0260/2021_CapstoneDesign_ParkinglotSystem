@@ -24,11 +24,13 @@ class Output:
             return
             
         cap = cv2.VideoCapture(videosource)
-        
+        MainWindow.hide()
         if not cap.isOpened():   #url주소
             QtWidgets.QMessageBox.warning(MainWindow, "Load failed", "Failed to load video(Invalid url address)") 
             cap.release()
+            MainWindow.show()
             return
+        MainWindow.show()
         
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * video_scale) #3
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * video_scale) #4

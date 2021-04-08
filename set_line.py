@@ -7,7 +7,7 @@ class Set_line:
     # Mouse Callback함수 : 파라미터는 고정됨.
     def Mouse_Click(event, x, y, flags, param):        
         
-        global count, num_inputflag, x0, y0, x1, y1, x2, y2, x3, y3, point_list, frame
+        global count, num_inputflag, x0, y0, x1, y1, x2, y2, x3, y3, frame
         
         if event == cv2.EVENT_LBUTTONDOWN:                      # 마우스를 클릭s
             if count == 0:
@@ -48,12 +48,18 @@ class Set_line:
     def addlines(MainWindow, videosource, video_scale):
         global count, num_inputflag, x0, y0, x1, y1, x2, y2, x3, y3, point_list, frame
         
+        MainWindow.hide()
+        
         cap = cv2.VideoCapture(videosource)
         
         if not cap.isOpened():   #url주소
             QtWidgets.QMessageBox.warning(MainWindow, "Load failed", "Failed to load video(Invalid url address)") 
             cap.release()
+            MainWindow.show()
             return
+        
+        MainWindow.show()
+
         
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * video_scale) #3
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * video_scale) #4
@@ -94,13 +100,14 @@ class Set_line:
                 break
     
             if k == 115:    #S = 저장하기: 이미지, 좌표
-                list_pt = list(map(str, point_list))
-                
+                cv2.imwrite("./line.jpg", frame)
+                list_pt = list(map(str, point_list))                
                 with open('points.txt', 'w') as f:    # 파일을 쓰기 모드(w)로 열기
                     for line in list_pt:
                         f.write(line+'\n')
-                cv2.imwrite("./line.jpg", frame)   
-                cv2.waitKey(500)   #0.5초 뒤 종료
+                cv2.putText(frame, "Saved", (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 255), 4, cv2.LINE_AA)
+                cv2.imshow('Set line', frame)
+                cv2.waitKey(1000)   #0.5초 뒤 종료
                 break    
             
             if k == 26:  # ctrl + z : 한 단계 되돌리기

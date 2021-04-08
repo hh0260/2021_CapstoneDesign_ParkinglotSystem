@@ -68,7 +68,7 @@ class Ui_MainWindow(object):
         self.pushButton_3.clicked.connect(self.stream_clicked)
 
     def help_clicked(self):
-        QtWidgets.QMessageBox.about(MainWindow, "help", "Set line - 주차선 가이드 설정\n"
+        QtWidgets.QMessageBox.about(MainWindow, "help", "Set line - 주차 가이드 설정\n"
                                                         "           * 주차선 입력: 마우스 클릭\n"
                                                         "           * 되돌리기: Ctrl+z\n"
                                                         "           * 저장: S\n"
@@ -78,7 +78,7 @@ class Ui_MainWindow(object):
 
     def setline_clicked(self):    
         self.button_set(False)        
-        Set_line.addlines(MainWindow, videosource, video_scale)        
+        Set_line.addlines(MainWindow, videosource, video_scale)     
         self.button_set(True) 
         
     def checkoutput_clicked(self):

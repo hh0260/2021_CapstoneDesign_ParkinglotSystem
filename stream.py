@@ -20,7 +20,8 @@ class Stream:
     
     def init_stream(Window, videosource, scale, frame, name):   #init
         global model, point_list, cap, outputFrame, lock, count, result_text, MainWindow, video_scale, video_frame, park_name
-
+        
+        MainWindow = Window        
         error_code = Space_classification.checkfile()
         
         if error_code == 0:   #학습모델
@@ -49,8 +50,7 @@ class Stream:
 
         count = 0   
         result_text = ""
-        park_name = name
-        MainWindow = Window
+        park_name = name        
         video_scale = scale
         video_frame = frame
         t = threading.Thread(target=Stream.detect_motion)
