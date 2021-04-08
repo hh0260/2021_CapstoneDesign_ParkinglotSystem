@@ -7,6 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 import sys
 from PyQt5 import QtCore, QtWidgets
+from set_line import Set_line  
+from output import Output 
 
 
 videosource = "./video.h264"
@@ -67,17 +69,19 @@ class Ui_MainWindow(object):
 
     def help_clicked(self):
         QtWidgets.QMessageBox.about(MainWindow, "help", "Set line - 주차선 가이드 설정\n"
-                                                              "\nCheck output - 결과 영상 확인\n"
-                                                              "\nStream - 결과 영상 스트리밍 시작")
+                                                        "           * 주차선 입력: 마우스 클릭\n"
+                                                        "           * 되돌리기: Ctrl+z\n"
+                                                        "           * 저장: S\n"
+                                                        "           * 종료: Esc\n"
+                                                        "\nCheck output - 결과 영상 확인\n"
+                                                        "\nStream - 결과 영상 스트리밍 시작")
 
-    def setline_clicked(self):
-        from set_line import Set_line      
+    def setline_clicked(self):    
         self.button_set(False)        
         Set_line.addlines(MainWindow, videosource, video_scale)        
         self.button_set(True) 
         
     def checkoutput_clicked(self):
-        from output import Output 
         self.button_set(False)
         Output.show_video(MainWindow, videosource, video_scale, video_frame)
         self.button_set(True) 
