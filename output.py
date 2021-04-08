@@ -5,74 +5,67 @@ Created on Thu Feb 17 09:26:25 2021
 @author: hh026
 """
 import cv2
-import os
-import numpy as np
 import tensorflow as tf
-from makevideo import MakeVideo
+from space_classification import Space_classification
+from PyQt5 import QtWidgets
 
 
 class Output:
     
-    def checkfile():
-        if not os.path.isfile('parking_model.h5'):
-            return 0     
-        if not os.path.isfile('points.txt'):
-            return 1 
-    
-    def show_video(cap):
-        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
-        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
+    def show_video(MainWindow, videosource, video_scale, video_frame):        
+        
+        error_code = Space_classification.checkfile()
+        
+        if error_code == 0:   #학습모델
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no trained model file.") 
+            return
+        if error_code == 1:   #좌표파일없음
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")  
+            return
+            
+        cap = cv2.VideoCapture(videosource)
+        
+        if not cap.isOpened():   #url주소
+            QtWidgets.QMessageBox.warning(MainWindow, "Load failed", "Failed to load video(Invalid url address)") 
+            cap.release()
+            return
+        
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * video_scale) #3
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * video_scale) #4
         
         point_list = []   
-        point_list = MakeVideo.list_point()    #좌표 불러오기        
+        point_list = Space_classification.list_point()    #좌표 불러오기        
         model = tf.keras.models.load_model('parking_model.h5') #학습모델 불러오기
        
-        #class_names = ['car','empty']
-        closecount = 0
+        close_flag = False
         count = 0     
-        #total_num = 0 
 
         while (cap.isOpened):
     
             ret, frame = cap.read()
             count += 1
-            closecount += 1
-            if ret == False:
-                break
-            frame = cv2.resize(frame, (width, height))
-            if count == 3:
-                count = 0
-                cut = np.copy(frame)
-        
-                i=0
-                while i < len(point_list)-3:   #모든 영역 빨간색
-                    frame = MakeVideo.draw_poly(frame, point_list, i, [0, 0, 255])
-                    i += 4      
-        
-                i=0
-                while i < len(point_list)-3:
-                    img = MakeVideo.warp_image(cut, point_list[i], point_list[i+1], 
-                                      point_list[i+2], point_list[i+3])
             
-                    img = tf.expand_dims(img, 0)
-                    predictions = model.predict(img)
-                    score = tf.nn.softmax(predictions[0])            
-                    #print(str(total_num)+": "+class_names[np.argmax(score)]+", "+str(100 * np.max(score)))
-                    #total_num += 1
-                    if np.argmax(score):
-                        frame = MakeVideo.draw_poly(frame, point_list, i, [0, 255, 0])
+            if ret == False:
+                QtWidgets.QMessageBox.warning(MainWindow, "Load failed", "Failed to load video") 
+                break
+            
+            frame = cv2.resize(frame, (width, height))
+           
+            if count == video_frame:
                 
-                    i += 4        
-                #total_num = 0   
+                frame, result_text = Space_classification.classification(frame, point_list, model)
                 cv2.imshow("Video", frame)
-
+                close_flag = True
+                count = 0  
+                
+            if close_flag and cv2.getWindowProperty('Video', 0) < 0:
+                break
         
             key = cv2.waitKey(33)  # 1) & 0xFF
 
             if key == 27:  # esc 종료
                 break
-            if closecount > 2 and cv2.getWindowProperty('Video', 0) < 0:
-                break
+            
 
         cap.release()
         cv2.destroyAllWindows()

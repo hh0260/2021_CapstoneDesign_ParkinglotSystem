@@ -8,83 +8,80 @@ Created on Wed Feb 17 18:53:36 2021
 from flask import Flask, render_template, Response
 import cv2
 import threading
-from makevideo import MakeVideo
+from space_classification import Space_classification
 import tensorflow as tf
 import numpy as np
+from PyQt5 import QtWidgets
 
 
 class Stream:
        
     app = Flask(__name__)
     
-    def init_stream(cap):   #init
-        global name, model, point_list, camera, outputFrame, lock, count, total_num, freespot_num, result_text
+    def init_stream(Window, videosource, scale, frame, name):   #init
+        global model, point_list, cap, outputFrame, lock, count, result_text, MainWindow, video_scale, video_frame, park_name
 
-        camera = cap  
+        error_code = Space_classification.checkfile()
+        
+        if error_code == 0:   #학습모델
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no trained model file.") 
+            return
+        if error_code == 1:   #좌표파일없음
+            QtWidgets.QMessageBox.warning(MainWindow, "no file", "There is no point lists file.")  
+            return
+            
+        cap = cv2.VideoCapture(videosource)
+        
+        if not cap.isOpened():   #url주소
+            QtWidgets.QMessageBox.warning(MainWindow, "Load failed", "Failed to load video(Invalid url address)") 
+            cap.release()
+            return
+        
         outputFrame = None    
         lock = threading.Lock()
+        
 
         #저장된 좌표 불러오기
         point_list = []
-        point_list = MakeVideo.list_point()   
+        point_list = Space_classification.list_point()   
         #저장된 모델 불러오기
         model = tf.keras.models.load_model('parking_model.h5')
 
         count = 0   
-        freespot_num = 0   
-        total_num = 0 
         result_text = ""
-        name = "글로벌 평생 학습관"
+        park_name = name
+        MainWindow = Window
+        video_scale = scale
+        video_frame = frame
         t = threading.Thread(target=Stream.detect_motion)
         t.daemon = True
         t.start()
         Stream.app.run(host = '0.0.0.0', threaded=True)
-        camera.release()
+        cap.release()
         cv2.destroyAllWindows()
         
         
     def detect_motion():
-        global model, point_list, camera, outputFrame, lock, count, total_num, freespot_num, result_text
+        global model, point_list, cap, outputFrame, lock, count, result_text, MainWindow, video_scale, video_frame
         
-        width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))//2 #3
-        height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))//2 #4
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * video_scale) #3
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * video_scale) #4
         
         while True:
-            success, frame = camera.read()            
+            
+            ret, frame = cap.read()            
             count += 1
-            if not success:
+            
+            if ret == False:
+                cap.release()
                 break
+            
             frame = cv2.resize(frame, (width, height))
-            if count == 3:
-                cut = np.copy(frame)
             
-                i=0
-                while i < len(point_list)-3:   #모든 영역 빨간색
-                    frame = MakeVideo.draw_poly(frame, point_list, i, [0, 0, 255])
-                    i += 4 
-                i=0
-                while i < len(point_list)-3:
-                    img = MakeVideo.warp_image(cut, point_list[i], point_list[i+1], 
-                                  point_list[i+2], point_list[i+3])
-            
-                    img = tf.expand_dims(img, 0)
-                    predictions = model.predict(img)
-                    score = tf.nn.softmax(predictions[0])
-            
-                    total_num += 1
-                    if np.argmax(score):
-                        freespot_num += 1
-                        frame = MakeVideo.draw_poly(frame, point_list, i, [0, 255, 0])
-                    i += 4
-        
-        
-            with lock:
-                if count == 3:
-                    result_text = str(freespot_num)  + "/"+ str(total_num)
+            if count == video_frame:                
+                frame, result_text = Space_classification.classification(frame, point_list, model)        
+                with lock:    
                     count = 0
-                    freespot_num = 0
-                    total_num = 0 
-                    cv2.putText(frame, result_text, (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 3, (0, 255, 255), 6, cv2.LINE_AA)
                     outputFrame = np.copy(frame)
             
     def gen_frames():
@@ -110,7 +107,7 @@ class Stream:
 
     @app.route('/')
     def index():
-        return render_template('test.html', text = result_text , name = name)
+        return render_template('test.html', text = result_text , name = park_name)
     
 if __name__ == '__main__':
     

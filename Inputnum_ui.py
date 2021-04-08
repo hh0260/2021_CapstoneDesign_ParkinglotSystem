@@ -36,8 +36,10 @@ class Ui_Inputnum(object):
         self.lineEdit.textChanged.connect(self.num_change)
         self.lineEdit.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.lineEdit.setObjectName("lineEdit")
+        
+        Dialog.setWindowTitle("Input number")
+        self.label.setText("Enter the number of parking spaces")
 
-        self.retranslateUi(Dialog)
         self.buttonBox.rejected.connect(Dialog.reject)
         self.buttonBox.accepted.connect(Dialog.accept) #ok 버튼 따로 처리 
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -45,9 +47,3 @@ class Ui_Inputnum(object):
     def num_change(self):  
         global space_num
         space_num=self.lineEdit.text()
-    
-
-    def retranslateUi(self, Dialog):
-        _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Input number"))
-        self.label.setText(_translate("Dialog", "Enter the number of parking spaces"))
