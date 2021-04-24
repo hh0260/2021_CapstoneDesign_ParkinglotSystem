@@ -11,7 +11,8 @@ from set_line import Set_line
 from output import Output 
 
 
-videosource = "./video.h264"
+videosource = "./video2.mp4"
+#videosource = "./video.h264"
 #videosource = "http://keycalendar.iptime.org:8091/?action=stream"
 #videosource = "http://wrong.address"
 park_name = "55호관"

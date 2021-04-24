@@ -26,8 +26,8 @@ print("total img: " + str(image_count))
  
 #몇가지 매개변수 정의
 batch_size = 32
-img_height = 100
-img_width = 200
+img_height = 50
+img_width = 100
 
 #8:2로 검증 분할
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(
@@ -45,6 +45,9 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
   seed=123,
   image_size=(img_height, img_width),
   batch_size=batch_size)
+
+
+
 
 #각 속성별 이름
 class_names = train_ds.class_names
@@ -104,7 +107,7 @@ model.compile(optimizer='adam',
 
 model.summary()   #모델 요약
 
-epochs=13    #모델 훈련하기
+epochs=13  #모델 훈련하기
 history = model.fit(
   train_ds,
   validation_data=val_ds,
@@ -139,43 +142,18 @@ plt.show()
 
 #실제 데이터로 테스트
 
-sunflower_path = cwd+"/test_images/car/007.jpg"
+data_path = cwd+"/test_images/car/007.jpg"
 
 img = keras.preprocessing.image.load_img(
-    sunflower_path, target_size=(img_height, img_width)
+    data_path, target_size=(img_height, img_width)
 )
-print(img)
-print(type(img))
 
 img_array = keras.preprocessing.image.img_to_array(img)
-print(img_array)
-print(type(img_array))
-
 img_array = tf.expand_dims(img_array, 0) # Create a batch
-print(img_array)
-print(type(img_array))
 predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(class_names[np.argmax(score)])
 print(np.argmax(score))
 print(100 * np.max(score))
-
-
-'''
-# 모델 구조를 출력합니다
-new_model.summary()
-
-img_array2 = keras.preprocessing.image.img_to_array(img)
-img_array2 = tf.expand_dims(img_array2, 0) # Create a batch
-
-predictions = model.predict(img_array2)
-score = tf.nn.softmax(predictions[0])
-
-print(class_names[np.argmax(score)])
-print(100 * np.max(score))
-
-'''
-
-#개선사항1. 학습데이터 밤이든 저녁이든 낮이든 추가 학습필요
 

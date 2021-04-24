@@ -56,7 +56,7 @@ class Stream:
         t = threading.Thread(target=Stream.detect_motion)
         t.daemon = True
         t.start()
-        Stream.app.run(host = '0.0.0.0', threaded=True)
+        Stream.app.run(host= '0.0.0.0', threaded=True)
         cap.release()
         cv2.destroyAllWindows()
         

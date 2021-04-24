@@ -30,7 +30,7 @@ cv2.namedWindow('original')
 cv2.setMouseCallback('original', mouse_callback)
 
 # 원본 이미지
-img_original = cv2.imread('cap.jpg')
+img_original = cv2.imread('line.jpg')
 
 
 while(True):

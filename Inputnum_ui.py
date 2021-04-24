@@ -8,9 +8,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-space_num = "1"
-isEmpty = True
-
 class Ui_Inputnum(object):    
     
     def setupUi(self, Dialog):
