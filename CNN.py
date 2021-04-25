@@ -26,8 +26,8 @@ print("total img: " + str(image_count))
  
 #몇가지 매개변수 정의
 batch_size = 32
-img_height = 50
-img_width = 100
+img_height = 32
+img_width = 64
 
 #8:2로 검증 분할
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(
@@ -107,7 +107,7 @@ model.compile(optimizer='adam',
 
 model.summary()   #모델 요약
 
-epochs=13  #모델 훈련하기
+epochs=10  #모델 훈련하기
 history = model.fit(
   train_ds,
   validation_data=val_ds,

@@ -10,6 +10,7 @@ import os
 import numpy as np
 import tensorflow as tf
 
+cl = ['car', 'empty']
  
 class Space_classification:
     
@@ -35,8 +36,8 @@ class Space_classification:
                 
         return point_list
      
-    #이미지 변환 100x100
-    def warp_image(image, xy0, xy1, xy2, xy3, height = 50, width = 100):
+    #이미지 변환 64x128
+    def warp_image(image, xy0, xy1, xy2, xy3, height = 32, width = 64):
         x_list = [xy0[0],xy1[0],xy2[0],xy3[0]]
         y_list = [xy0[1],xy1[1],xy2[1],xy3[1]]
         
@@ -46,7 +47,7 @@ class Space_classification:
         
         M = cv2.getPerspectiveTransform(pt1,pt2)
         img_result = cv2.warpPerspective(image, M, (width,height))
-        cv2.imshow("Video1", img_result)
+        #cv2.imshow("Video1", img_result)
         
         return img_result
     
@@ -78,13 +79,13 @@ class Space_classification:
             img = Space_classification.warp_image(cut, point_list[i], point_list[i+1], 
                                                   point_list[i+2], point_list[i+3])
             
-            cv2.imwrite(str(i/4)+'.jpg',img)
+            #cv2.imwrite("C:/Users/hh026/Desktop/PKLot/plus/"+str(point_list[i])+str(int(i/4))+'.jpg',img)
             img = tf.expand_dims(img, 0)
             
             
             predictions = model.predict(img)
             score = tf.nn.softmax(predictions[0])            
-            print(str(total_num)+": "+str(np.argmax(score))+", "+str(100 * np.max(score)))
+            #print(str(total_num)+": "+str(cl[np.argmax(score)])+", "+str(100 * np.max(score)))
             total_num += 1
             if np.argmax(score):
                 freespot_num += 1

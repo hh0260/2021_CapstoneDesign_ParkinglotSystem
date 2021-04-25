@@ -9,7 +9,7 @@ class Set_line:
         
         global count, num_inputflag, x0, y0, x1, y1, x2, y2, x3, y3, frame
         
-        if event == cv2.EVENT_LBUTTONDOWN:                      # 마우스를 클릭s
+        if event == cv2.EVENT_LBUTTONDOWN:                      # 마우스 클릭
             if count == 0:
                 x0, y0 = x, y
                 count += 1   
