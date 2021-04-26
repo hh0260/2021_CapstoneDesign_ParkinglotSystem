@@ -52,12 +52,12 @@ class Space_classification:
         return img_result
     
 
-    def draw_poly(image, point_list, i, color=[0, 0, 255]):
+    def draw_poly(image, point_list, i, color=[0, 0, 255], thic = 2):
         
-        cv2.line(image,point_list[i], point_list[i+1],color,2)
-        cv2.line(image,point_list[i+1], point_list[i+2],color,2)
-        cv2.line(image,point_list[i+2], point_list[i+3],color,2)
-        cv2.line(image,point_list[i+3], point_list[i],color,2)
+        cv2.line(image,point_list[i], point_list[i+1],color, thic)
+        cv2.line(image,point_list[i+1], point_list[i+2],color, thic)
+        cv2.line(image,point_list[i+2], point_list[i+3],color, thic)
+        cv2.line(image,point_list[i+3], point_list[i],color, thic)
         
         return image
     
@@ -89,7 +89,7 @@ class Space_classification:
             total_num += 1
             if np.argmax(score):
                 freespot_num += 1
-                frame = Space_classification.draw_poly(frame, point_list, i, [0, 255, 0])
+                frame = Space_classification.draw_poly(frame, point_list, i, [0, 255, 0], 4)
             i += 4        
                     
                     

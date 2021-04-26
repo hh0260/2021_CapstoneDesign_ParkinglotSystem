@@ -16,7 +16,7 @@ videosource = "./video.h264"
 #videosource = "http://keycalendar.iptime.org:8091/?action=stream"
 #videosource = "http://wrong.address"
 park_name = "55호관"
-video_scale = 1
+video_scale = 0.5
 video_frame = 3
 
 class Ui_MainWindow(object):    
