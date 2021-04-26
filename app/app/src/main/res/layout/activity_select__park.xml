@@ -72,36 +72,37 @@
             android:padding="30dp">
 
           <LinearLayout
+              android:id="@+id/buttonlayout"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn1"
+                android:id="@+id/btn0"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:background="#FFF"
                 android:drawableLeft="@drawable/ic_baseline_directions_car_24"
-                android:onClick="click_parkinglot"
-                android:text=" "
+                android:text="98호관 주차장"
                 android:textSize="18dp"
                 android:padding="25dp"
                 android:gravity="right"
                 android:textColor="#000000" />
 
             <Button
+                android:id="@+id/btn1"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:background="#FFF"
                 android:drawableLeft="@drawable/ic_baseline_directions_car_24"
-                android:onClick="click_parkinglot"
                 android:text="55호관 주차장   5/16"
                 android:textSize="18dp"
                 android:padding="25dp"
                 android:gravity="right"
                 android:textColor="#000000" />
             <Button
+                android:id="@+id/btn2"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -114,6 +115,7 @@
                 android:gravity="right"
                 android:textColor="#000000" />
             <Button
+                android:id="@+id/btn3"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -126,6 +128,7 @@
                 android:gravity="right"
                 android:textColor="#000000" />
             <Button
+                android:id="@+id/btn4"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -138,6 +141,7 @@
                 android:gravity="right"
                 android:textColor="#000000" />
             <Button
+                android:id="@+id/btn5"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -150,6 +154,7 @@
                 android:textSize="18dp"
                 android:textColor="#000000" />
             <Button
+                android:id="@+id/btn6"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

@@ -2,7 +2,7 @@ package com.example.parkinglotsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,15 +18,15 @@ import java.io.IOException;
 
 public class VideoShow extends AppCompatActivity {
 
-    String urlAddress = "http://keycalendar.iptime.org:5000/";
     String name;
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_view);
 
+        Intent secondIntent = getIntent();
+        String urlAddress = secondIntent.getStringExtra("url");
         final Bundle bundle = new Bundle();
 
         new Thread(){
@@ -58,7 +58,7 @@ public class VideoShow extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        webView.loadData("<html><body><div><img src='http://keycalendar.iptime.org:5000/video_feed'/></div></body></html>" ,"text/html",  "UTF-8");
+        webView.loadData("<html><body><div><img src='" + urlAddress + "video_feed'/></div></body></html>" ,"text/html",  "UTF-8");
     }
 
     Handler handler = new Handler(){

@@ -3,7 +3,6 @@ package com.example.parkinglotsystem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +17,7 @@ import java.io.IOException;
 
 public class SelectPark extends AppCompatActivity {
 
-    String urlAddress = "http://keycalendar.iptime.org:5000/";
+    String[] urlAddress = {"http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/"};
     String count, name;
 
     @Override
@@ -32,17 +31,20 @@ public class SelectPark extends AppCompatActivity {
             public void run() {
                 Document doc = null;
                 try {
-                    doc = Jsoup.connect(urlAddress).get();
-                    Elements contents = doc.select("#count");
-                    count = contents.text();
-                    contents = doc.select("#name");
-                    name = contents.text();
-                    String text = name + "  " + count;
+                    for(int i = 0; i < urlAddress.length; i++) {
+                        doc = Jsoup.connect(urlAddress[i]).get();
+                        Elements contents = doc.select("#count");
+                        count = contents.text();
+                        contents = doc.select("#name");
+                        name = contents.text();
+                        String text = name + "  " + count;
 
-                    bundle.putString("set_text", text);
-                    Message msg = handler.obtainMessage();
-                    msg.setData(bundle);
-                    handler.sendMessage(msg);
+                        bundle.putString("set_text", text);
+                        bundle.putInt("index", i);
+                        Message msg = handler.obtainMessage();
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -56,9 +58,19 @@ public class SelectPark extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
-            Button button1;
-            button1 = (Button) findViewById(R.id.btn1);
-            button1.setText(bundle.getString("set_text"));
+            Integer[] button_id = {R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6};
+            int btn_num = bundle.getInt("index");
+            Button button = (Button) findViewById(button_id[btn_num]);
+            button.setText(bundle.getString("set_text"));
+            button.setOnClickListener(new Button.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(getApplication(), VideoShow.class);
+                    intent.putExtra("url", urlAddress[btn_num]);
+                    startActivity(intent);
+                }
+            });
+
         }
     };
 
@@ -66,7 +78,7 @@ public class SelectPark extends AppCompatActivity {
     protected  void onRestart(){
         super.onRestart();
         finish();
-        Intent intent= new Intent(getApplication(), SelectPark.class);
+        Intent intent= new Intent(this, SelectPark.class);
         startActivity(intent);
     }
 
@@ -77,7 +89,7 @@ public class SelectPark extends AppCompatActivity {
 
     public void click_reset(View view) {
         finish();
-        Intent intent= new Intent(getApplication(), SelectPark.class);
+        Intent intent= new Intent(this, SelectPark.class);
         startActivity(intent);
     }
 
