@@ -123,11 +123,12 @@ class Set_line:
                 side_01 = (x0-x1)**2 + (y0-y1)**2
                 side_03 = (x0-x3)**2 + (y0-y3)**2
                 
+                space_num = int(Inputnum_ui.space_num)
+                
                 if  side_01 < side_03:
                     x0, x1, x2, x3 = x1, x2, x3, x0
-                    y0, y1, y2, y3 = y1, y2, y3, y0
-                    
-                space_num = int(Inputnum_ui.space_num)
+                    y0, y1, y2, y3 = y1, y2, y3, y0                    
+                
                 gap_x01 = (x1-x0)/(space_num)
                 gap_y01 = (y1-y0)/(space_num)
                 gap_x32 = (x2-x3)/(space_num)
@@ -135,14 +136,18 @@ class Set_line:
         
                 i=0
                 for i in range(space_num):  #각 사각형 별 좌표 구하기
-                    #점0
-                    point_list.append((int(x0 + i*gap_x01), int(y0 + i*gap_y01)))
+                    if space_num > 1:
+                        #점0
+                        point_list.append((int(x0 + i*gap_x01), int(y0 + i*gap_y01)))
                     #점1
                     point_list.append((int(x0 + (i+1)*gap_x01), int(y0 + (i+1)*gap_y01)))
                     #점2
                     point_list.append((int(x3 + (i+1)*gap_x32), int(y3 + (i+1)*gap_y32)))
                     #점3
                     point_list.append((int(x3 + i*gap_x32), int(y3 + i*gap_y32)))
+                    if space_num <= 1:
+                        #점0
+                        point_list.append((int(x0 + i*gap_x01), int(y0 + i*gap_y01)))
                     
                 #사각형 그리기
                 frame = Set_line.draw_list(frame, point_list)

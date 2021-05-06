@@ -10,13 +10,15 @@ from PyQt5 import QtCore, QtWidgets
 from set_line import Set_line  
 from output import Output 
 
+#videosource = "./test_dark.mp4"
+videosource = "./video4.mp4"
 #videosource = "./video3.mp4"
 #videosource = "./video2.mp4"
-videosource = "./video.h264"
+#videosource = "./video.h264"
 #videosource = "http://keycalendar.iptime.org:8091/?action=stream"
 #videosource = "http://wrong.address"
 park_name = "55호관"
-video_scale = 0.5
+video_scale = 1
 video_frame = 3
 
 class Ui_MainWindow(object):    
