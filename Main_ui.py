@@ -10,16 +10,14 @@ from PyQt5 import QtCore, QtWidgets
 from set_line import Set_line  
 from output import Output 
 
-#videosource = "./test_dark.mp4"
+#videosource = "./test_video1.mp4"
 videosource = "./video4.mp4"
-#videosource = "./video3.mp4"
-#videosource = "./video2.mp4"
 #videosource = "./video.h264"
-#videosource = "http://keycalendar.iptime.org:8091/?action=stream"
 #videosource = "http://wrong.address"
-park_name = "55호관"
-video_scale = 1
-video_frame = 3
+
+park_name = "98호관"
+video_scale = 1   #영상 크기
+cal_cycle = 3  #계산 주기
 
 class Ui_MainWindow(object):    
  
@@ -86,14 +84,14 @@ class Ui_MainWindow(object):
         
     def checkoutput_clicked(self):
         self.button_set(False)
-        Output.show_video(MainWindow, videosource, video_scale, video_frame)
+        Output.show_video(MainWindow, videosource, video_scale, cal_cycle)
         self.button_set(True) 
         
     def stream_clicked(self):   
         from stream import Stream   
         self.button_set(False)
         MainWindow.hide()
-        Stream.init_stream(MainWindow, videosource, video_scale, video_frame, park_name)  
+        Stream.init_stream(MainWindow, videosource, video_scale, cal_cycle, park_name)  
         self.button_set(True)
         MainWindow.show()
         

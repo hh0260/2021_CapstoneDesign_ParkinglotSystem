@@ -18,8 +18,8 @@ class Stream:
        
     app = Flask(__name__)
     
-    def init_stream(Window, videosource, scale, frame, name):   #init
-        global model, point_list, cap, outputFrame, lock, count, result_text, MainWindow, video_scale, video_frame, park_name
+    def init_stream(Window, videosource, scale, cycle, name):   #init
+        global model, point_list, cap, outputFrame, lock, count, result_text, MainWindow, video_scale, cal_cycle, park_name
         
         MainWindow = Window        
         error_code = Space_classification.checkfile()
@@ -52,7 +52,7 @@ class Stream:
         result_text = ""
         park_name = name        
         video_scale = scale
-        video_frame = frame
+        cal_cycle = cycle
         t = threading.Thread(target=Stream.detect_motion)
         t.daemon = True
         t.start()
@@ -62,7 +62,7 @@ class Stream:
         
         
     def detect_motion():
-        global model, point_list, cap, outputFrame, lock, count, result_text, MainWindow, video_scale, video_frame
+        global model, point_list, cap, outputFrame, lock, count, result_text, MainWindow, video_scale, cal_cycle
         
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * video_scale) #3
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * video_scale) #4
@@ -78,7 +78,7 @@ class Stream:
             
             frame = cv2.resize(frame, (width, height))
             
-            if count == video_frame:                
+            if count == cal_cycle:                
                 frame, result_text = Space_classification.classification(frame, point_list, model)        
                 with lock:    
                     count = 0
@@ -108,10 +108,4 @@ class Stream:
     @app.route('/')
     def index():
         return render_template('test.html', text = result_text , name = park_name)
-    
-if __name__ == '__main__':
-    
-    Stream.stream_video("./video.h264")    
-
-
     

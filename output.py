@@ -12,7 +12,7 @@ from PyQt5 import QtWidgets
 
 class Output:
     
-    def show_video(MainWindow, videosource, video_scale, video_frame):        
+    def show_video(MainWindow, videosource, video_scale, cal_cycle):        
         
         error_code = Space_classification.checkfile()
         
@@ -53,7 +53,7 @@ class Output:
             
             frame = cv2.resize(frame, (width, height))
            
-            if count == video_frame:
+            if count == cal_cycle:
                 
                 frame, result_text = Space_classification.classification(frame, point_list, model)
                 cv2.imshow("Video", frame)

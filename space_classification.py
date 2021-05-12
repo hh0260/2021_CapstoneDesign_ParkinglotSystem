@@ -102,17 +102,19 @@ class Space_classification:
             img = Space_classification.warp_image(cut, point_list[i], point_list[i+1], 
                                                   point_list[i+2], point_list[i+3])
             
-            #cv2.imwrite("C:/Users/hh026/Desktop/PKLot/plus/"+str(point_list[i])+str(int(i/4))+'.jpg',img)
-            img = tf.expand_dims(img, 0)
+            img_clsf = tf.expand_dims(img, 0)
             
             
-            predictions = model.predict(img)
+            predictions = model.predict(img_clsf)
             score = tf.nn.softmax(predictions[0])            
-            print(str(total_num)+": "+str(cl[np.argmax(score)])+", "+str(100 * np.max(score)))
+            #print(str(total_num)+": "+str(cl[np.argmax(score)])+", "+str(100 * np.max(score)))  #분류결과 확인
             total_num += 1
             if np.argmax(score):
                 freespot_num += 1
                 frame = Space_classification.draw_poly(frame, point_list, i, [0, 255, 0], 4)
+                # cv2.imwrite("C:/Users/hh0260/Desktop/PKLot/empty/"+str(point_list[i])+str(int(i/4))+'.jpg',img)
+            # else:
+                # cv2.imwrite("C:/Users/hh0260/Desktop/PKLot/car/"+str(point_list[i])+str(int(i/4))+'.jpg',img)
             i += 4        
                     
                     
