@@ -26,12 +26,12 @@ Parking space tracking system with Deep Learning
 
 
 ## 실행 방법
-    1. 관리자 프로그램
-    - video.h264 파일을 다운로드 후 프로그램 폴더에 넣는다.
-    - Main_ui.py 파일을 실행한다.
+### 1. 관리자 프로그램
+- video.h264 파일을 다운로드 후 프로그램 폴더에 넣는다.
+- Main_ui.py 파일을 실행한다.
 
-    2. 사용자 모바일 앱
-    - 사용자 모바일 앱은 관리자가 SelectPark.java내의 'urlAddress'을 관리자 프로그램에서 송출하는 url로 수정 후 사용한다.
+### 2. 사용자 모바일 앱
+- 사용자 모바일 앱은 관리자가 SelectPark.java내의 'urlAddress'을 관리자 프로그램에서 송출하는 url로 수정 후 사용한다.
 
 ## 프로그램 구성 요소
 
