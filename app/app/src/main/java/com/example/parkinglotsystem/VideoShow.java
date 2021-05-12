@@ -46,14 +46,4 @@ public class VideoShow extends AppCompatActivity {
 
         webView.loadData("<html><body><div><img src='" + urlAddress + "video_feed'/></div></body></html>" ,"text/html",  "UTF-8");
     }
-
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            TextView tv1;
-            tv1 = (TextView) findViewById(R.id.testview);
-            tv1.setText(bundle.getString("set_name"));
-        }
-    };
 }
