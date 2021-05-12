@@ -19,6 +19,7 @@ import java.io.IOException;
 public class VideoShow extends AppCompatActivity {
 
     String name;
+    String urlAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,28 +27,13 @@ public class VideoShow extends AppCompatActivity {
         setContentView(R.layout.activity_video_view);
 
         Intent secondIntent = getIntent();
-        String urlAddress = secondIntent.getStringExtra("url");
-        final Bundle bundle = new Bundle();
-
-        new Thread(){
-            @Override
-            public void run() {
-                Document doc = null;
-                try {
-                    doc = Jsoup.connect(urlAddress).get();
-                    Elements contents = doc.select("#name");
-                    name = contents.text();
-
-                    bundle.putString("set_name", name);
-                    Message msg = handler.obtainMessage();
-                    msg.setData(bundle);
-                    handler.sendMessage(msg);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+        urlAddress = secondIntent.getStringExtra("url");
+        name = secondIntent.getStringExtra("name");
+        if(name == null)
+            name = "서버연결 안됨";
+        TextView tv1;
+        tv1 = (TextView) findViewById(R.id.testview);
+        tv1.setText(name);
 
         WebView webView = (WebView)findViewById(R.id.webView);
 
