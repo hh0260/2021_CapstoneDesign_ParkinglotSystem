@@ -16,8 +16,8 @@ import java.io.IOException;
 
 public class SelectPark extends AppCompatActivity {
 
-    String[] urlAddress = {"http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/"};
-//    String[] urlAddress = {"http://keycalendar.iptime.org:5000/"};
+    String[] urlAddress = {"http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/",
+            "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/", "http://keycalendar.iptime.org:5000/"};
     String name;
 
     @Override
@@ -25,16 +25,11 @@ public class SelectPark extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select__park);
 
-        JsoupAsyncTask jsoupAsyncTask = new JsoupAsyncTask();
-        jsoupAsyncTask.execute();
+        Parsing parsing = new Parsing();
+        parsing.execute();
     }
 
-    private class JsoupAsyncTask extends AsyncTask<Void, Void, String[]> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+    private class Parsing extends AsyncTask<Void, Void, String[]> {
 
         @Override
         protected String[] doInBackground(Void... params) {
