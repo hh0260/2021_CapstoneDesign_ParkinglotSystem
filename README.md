@@ -19,9 +19,9 @@ Deep Learning-based Real-time Parking Management System
 - Window 10 64bit
 
 ## 요약
- 본 프로그램은 TensorFlow Keras API를 사용한 이미지 분류 방식으로 실시간 영상의 주차면을 구분함
- OpenCV 라이브러리를 사용하여 사전 영상처리 / 결과 영상처리
- 애플리케이션을 통해 서버로부터 전송받은 주차정보 및 실시간 영상을 출력
+ #### 본 프로그램은 TensorFlow Keras API를 사용한 이미지 분류 방식으로 실시간 영상의 주차면을 구분함
+ #### OpenCV 라이브러리를 사용하여 사전 영상처리 / 결과 영상처리
+ #### 애플리케이션을 통해 서버로부터 전송받은 주차정보 및 실시간 영상을 출력
 
 ## 실행 방법
 ### 1. 관리자 프로그램
@@ -40,23 +40,35 @@ Deep Learning-based Real-time Parking Management System
 
 프로그램 메인 UI, 각 기능별로 연결되어있다.
 
-Set line– 클릭 시 주차 가이드 입력화면이 나타난다.
-Check output– 클릭 시 결과 영상을 확인할 수 있다.
-Stream– 클릭 시 결과 영상을 서버로 송출한다.
+- Set line– 클릭 시 주차 가이드 입력화면이 나타난다.
+- Check output– 클릭 시 결과 영상을 확인할 수 있다.
+- Stream– 클릭 시 결과 영상을 서버로 송출한다.
 
-![line](https://user-images.githubusercontent.com/74241873/110746580-5a756580-8280-11eb-9b4a-16bea89b6b1b.jpg)
+### set_line.py
 
+주차 가이드 설정: 마우스 입력을 통해 주차면 설정, 's' 키로 저장
+
+![image](https://user-images.githubusercontent.com/74241873/118252481-c758e600-b4e3-11eb-88a1-0fe3aab50964.png)
+
+### Inputnum_ui.py
+
+가이드 설정할 때 숫자 입력하는 UI
+
+### space_classification.py
+
+학습모델 불러와서 이미지분류, 결과 영상 제작
+
+![image](https://user-images.githubusercontent.com/74241873/118252999-5fef6600-b4e4-11eb-8b43-807382e8fdf0.png)
+(결과영상)
 
 ### output.py
 
-get_line.py에서 생성된 좌표와 미리학습된 모델을 활용하여 해당 좌표 내 공간이 주자가능 영역인지 아닌지를 판단합니다.
-
-주차가능한 구역은 초록색, 불가능한 구역은 빨간색으로 표시합니다. 
-![image](https://user-images.githubusercontent.com/74241873/110746807-b3dd9480-8280-11eb-82a3-aaef5fdda1b2.png)
-
+결과영상 출력
 
 ### stream.py
-실시간 처리된 영상을 다시 웹스트리밍합니다.
+
+결과영상 Flask 웹 스트리밍
+
 
 ## 테스트영상 다운로드
 https://drive.google.com/file/d/18kJNkTtR4ZJDcZvqszIgex-rzL48oF8y/view?usp=sharing
