@@ -10,12 +10,11 @@ from PyQt5 import QtCore, QtWidgets
 from set_line import Set_line  
 from output import Output 
 
-#videosource = "./test_video1.mp4"
-videosource = "./video4.mp4"
-#videosource = "./video.h264"
+
+videosource = "./video.h264"   #영상 URL or 파일 명
 #videosource = "http://wrong.address"
 
-park_name = "98호관"
+park_name = "98호관"    #주차장 이름
 video_scale = 1   #영상 크기
 cal_cycle = 3  #계산 주기
 

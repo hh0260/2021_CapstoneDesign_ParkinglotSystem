@@ -43,7 +43,8 @@ class Space_classification:
         #pt1 = np.float32([[min(x_list),min(y_list)],[min(x_list),max(y_list)],[max(x_list),max(y_list)],[max(x_list),min(y_list)]])
         
         if abs(xy3[0]-xy0[0])>abs(xy3[1]-xy0[1]):
-            pt1 = np.float32([[xy0[0],xy0[1]],[(xy0[0]+xy1[0])/2,(xy0[1]+xy1[1])/2],[(xy2[0]+xy3[0])/2,(xy2[1]+xy3[1])/2],[xy3[0],xy3[1]]])    
+            #pt1 = np.float32([[xy0[0],xy0[1]],[(xy0[0]+xy1[0])/2,(xy0[1]+xy1[1])/2],[(xy2[0]+xy3[0])/2,(xy2[1]+xy3[1])/2],[xy3[0],xy3[1]]])    
+            pt1 = np.float32([[xy0[0],xy0[1]],[xy1[0],xy1[1]],[xy2[0],xy2[1]],[xy3[0],xy3[1]]])    
             #print("가로")
         else:
             pt1 = np.float32([[xy0[0],xy0[1]],[xy1[0],xy1[1]],[xy2[0],xy2[1]],[xy3[0],xy3[1]]])    
@@ -112,9 +113,9 @@ class Space_classification:
             if np.argmax(score):
                 freespot_num += 1
                 frame = Space_classification.draw_poly(frame, point_list, i, [0, 255, 0], 4)
-                # cv2.imwrite("C:/Users/hh0260/Desktop/PKLot/empty/"+str(point_list[i])+str(int(i/4))+'.jpg',img)
+                # cv2.imwrite(str(point_list[i])+str(int(i/4))+'.jpg',img)
             # else:
-                # cv2.imwrite("C:/Users/hh0260/Desktop/PKLot/car/"+str(point_list[i])+str(int(i/4))+'.jpg',img)
+                # cv2.imwrite(str(point_list[i])+str(int(i/4))+'.jpg',img)
             i += 4        
                     
                     
