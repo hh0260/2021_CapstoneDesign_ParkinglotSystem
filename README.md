@@ -72,3 +72,5 @@ Deep Learning-based Real-time Parking Management System
 
 ## 테스트영상 다운로드
 https://drive.google.com/file/d/18kJNkTtR4ZJDcZvqszIgex-rzL48oF8y/view?usp=sharing
+
+#### 프로그램에 대한 자세한 설명은 hh0260@changwon.ac.kr으로 연락바랍니다
